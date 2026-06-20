@@ -1,0 +1,6 @@
+{
+  "name": "run_command",
+  "args": {
+    "command_line": "git push --force origin main"
+  }
+}

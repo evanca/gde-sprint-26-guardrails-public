@@ -1,0 +1,5 @@
+[
+  { "id": "0005_create_orders", "applied": true },
+  { "id": "0006_add_users_index", "applied": true },
+  { "id": "0007_add_orders_index", "applied": false }
+]

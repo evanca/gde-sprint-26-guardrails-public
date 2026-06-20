@@ -1,0 +1,368 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <!-- seo:stamped -->
+  <meta name="description" content="Put deny-by-default policies and lifecycle hooks on an autonomous agent so it can't read secrets, edit migrations, or run destructive deletes in a repo.">
+  <meta name="keywords" content="antigravity-sdk, safety-policies, deny-by-default, hooks, lifecycle">
+  <meta name="author" content="evanca">
+  <link rel="canonical" href="https://happycode.studio/gde-sprint-26-guardrails-public/release-guardrails-console/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Guard an Autonomous Agent with Deny-by-Default Policies and Lifecycle Hooks">
+  <meta property="og:description" content="Put deny-by-default policies and lifecycle hooks on an autonomous agent so it can't read secrets, edit migrations, or run destructive deletes in a repo.">
+  <meta property="og:url" content="https://happycode.studio/gde-sprint-26-guardrails-public/release-guardrails-console/">
+  <meta property="og:site_name" content="2026 Agentic Architect Sprint by Google">
+  <meta property="og:image" content="https://happycode.studio/gde-sprint-26-guardrails-public/release-guardrails-console/img/d133159518c5053.gif">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Guard an Autonomous Agent with Deny-by-Default Policies and Lifecycle Hooks">
+  <meta name="twitter:description" content="Put deny-by-default policies and lifecycle hooks on an autonomous agent so it can't read secrets, edit migrations, or run destructive deletes in a repo.">
+  <meta name="twitter:image" content="https://happycode.studio/gde-sprint-26-guardrails-public/release-guardrails-console/img/d133159518c5053.gif">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Guard an Autonomous Agent with Deny-by-Default Policies and Lifecycle Hooks",
+      "description": "Put deny-by-default policies and lifecycle hooks on an autonomous agent so it can't read secrets, edit migrations, or run destructive deletes in a repo.",
+      "url": "https://happycode.studio/gde-sprint-26-guardrails-public/release-guardrails-console/",
+      "inLanguage": "en",
+      "keywords": "antigravity-sdk, safety-policies, deny-by-default, hooks, lifecycle",
+      "author": {
+        "@type": "Person",
+        "name": "evanca"
+      },
+      "isPartOf": {
+        "@type": "Course",
+        "name": "2026 Agentic Architect Sprint by Google",
+        "url": "https://happycode.studio"
+      },
+      "image": "https://happycode.studio/gde-sprint-26-guardrails-public/release-guardrails-console/img/d133159518c5053.gif"
+    },
+    {
+      "@type": "HowTo",
+      "name": "Guard an Autonomous Agent with Deny-by-Default Policies and Lifecycle Hooks",
+      "description": "Put deny-by-default policies and lifecycle hooks on an autonomous agent so it can't read secrets, edit migrations, or run destructive deletes in a repo.",
+      "totalTime": "PT42M",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Prepare the SDK"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Assemble the Workspace"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "See the Danger: an Unguarded Agent"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Implement the Deny-by-Default Guard"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "How the Guard Is Wired"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Watch the Guard Intervene"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 7,
+          "name": "Verify and Audit"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 8,
+          "name": "Congratulations"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "2026 Agentic Architect Sprint by Google",
+          "item": "https://happycode.studio"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guard an Autonomous Agent with Deny-by-Default Policies and Lifecycle Hooks",
+          "item": "https://happycode.studio/gde-sprint-26-guardrails-public/release-guardrails-console/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+  <style id="cl-prompt-plain">
+    /* Render ```text blocks (prompts, trees) as plain monospace, not syntax-colored. */
+    pre code[class*="language-text"] span { color: inherit !important; background: transparent !important; font-weight: inherit !important; font-style: inherit !important; }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVZ48SGNV9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-QVZ48SGNV9');
+  </script>
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Guard an Autonomous Agent with Deny-by-Default Policies and Lifecycle Hooks</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="release-guardrails-console"
+                  title="Guard an Autonomous Agent with Deny-by-Default Policies and Lifecycle Hooks"
+                  environment="web"
+                  feedback-link="https://github.com/evanca/gde-sprint-26-guardrails-public/issues">
+    
+      <google-codelab-step label="Introduction" duration="4">
+        <p>This codelab is part of the <strong>2026 Agentic Architect Sprint by Google</strong>.</p>
+<p>An architect will not point an autonomous agent at a release repository on trust. Before it runs, you want a guarantee that it cannot do something catastrophic — read a production secret, rewrite an applied migration, force-push a shared branch, install an unvetted package, or delete a live deployment. This codelab builds that guarantee with the <strong>Antigravity SDK</strong> (<code>google-antigravity</code>, Python): a <strong>deny-by-default</strong> policy, a disabled raw shell, a curated tool that makes a risky command safe, and an audit trail of everything that ran.</p>
+<h2 is-upgraded>The starting point</h2>
+<p>The <strong>Release Guardrails Console</strong> is a mock release repo — services by environment, feature flags, applied migrations, production config, and masked secrets, all in local JSON. No real secrets, backend, or network. An autonomous agent works inside it through the SDK.</p>
+<p>In the starter, the guard logic (<code>guard/policy.py</code>) is an unimplemented stub, so the agent is effectively ungoverned: it can read the sealed secret and issue a real <code>kubectl delete</code>.</p>
+<h2 is-upgraded>The problem</h2>
+<p>Agentic SDKs let an agent call tools — read and edit files, run commands, talk to a cluster. That power is the risk. An ungoverned agent asked to &#34;free up space&#34; might delete a migration; asked to &#34;verify the database&#34; might print a secret. You need to intercept every tool call <strong>before it executes</strong> and decide what is allowed — without hand-writing a bespoke check for each one.</p>
+<h2 is-upgraded>How the Antigravity SDK helps</h2>
+<p>The SDK gives you a <strong>declarative policy system</strong> and a <strong>lifecycle-hook</strong> pipeline that runs on every tool call: <code>Decide → Execute → Inspect</code>.</p>
+<ul>
+<li><strong>Decide (deny-by-default):</strong> a <code>policy</code> list — <code>deny_all()</code> plus explicit <code>allow(...)</code>, with <code>when=</code> predicates on the arguments — blocks dangerous calls and returns a reason the agent can read and adapt to.</li>
+<li><strong>Disable: </strong><code>CapabilitiesConfig</code> removes a whole tool (raw shell) from the agent&#39;s reach, so some commands are not merely denied — they are impossible.</li>
+<li><strong>Rewrite before execution:</strong> raw shell is gone, so the only way to the cluster is a curated <strong><code>kubectl</code></strong><strong> tool</strong> whose own code rewrites a destructive <code>delete</code> into <code>--dry-run=client</code> before it runs.</li>
+<li><strong>Inspect (audit):</strong> a <code>post_tool_call</code> hook records everything that executed.</li>
+</ul>
+<h2 is-upgraded>What You Will Build</h2>
+<p>A release repo an autonomous agent can work in safely:</p>
+<ul>
+<li>a deny-by-default policy that <strong>denies</strong> reading sealed secrets and editing protected paths (migrations, secrets), each with a reason;</li>
+<li>raw <code>run_command</code> <strong>disabled</strong> entirely, so force-push and package installs are unavailable;</li>
+<li>a curated <code>kubectl</code> tool that <strong>rewrites </strong><code>delete</code> to <code>--dry-run=client</code>;</li>
+<li>a post-tool <strong>audit</strong> trail of every tool the agent ran.</li>
+</ul>
+<h2 is-upgraded>What You Will Learn</h2>
+<ul>
+<li>How the SDK&#39;s hook lifecycle (<code>Decide → Execute → Inspect</code>) intercepts tool calls.</li>
+<li>How to express deny-by-default with <code>policy.deny_all()</code> + <code>allow(...)</code> + <code>when=</code> predicates.</li>
+<li>When to <strong>disable</strong> a tool (capabilities) versus <strong>deny</strong> it (policy), and why.</li>
+<li>How a denial returns a reason the agent adapts to, instead of failing silently.</li>
+<li>How a curated tool rewrites a risky command before execution.</li>
+<li>How to unit-test a safety policy deterministically, offline.</li>
+</ul>
+<h2 is-upgraded>Cost and Scope</h2>
+<p>The guard logic (<code>guard/policy.py</code>) is pure Python, so the whole policy is tested offline with <code>python -m unittest</code> — no agent, no network, no SDK install needed to verify it. Running the live agent against the guard (with the SDK installed) is bounded: a couple of short prompts. There is no real cluster — the <code>kubectl</code> tool reports what it would run.</p>
+<p>Target duration: <strong>35–45 minutes</strong>.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Prepare the SDK" duration="4">
+        <h2 is-upgraded>Step 1: Install the Antigravity SDK</h2>
+<p>The guard is verified offline with no SDK installed. Install the SDK only to run a live agent against it. Install with <code>python -m pip</code> so it lands in the <strong>same</strong> interpreter you run the agent with (this avoids the common case where a bare <code>pip</code> targets a different environment, e.g. under Anaconda):</p>
+<pre><code language="language-bash" class="language-bash">python -m pip install google-antigravity
+python -c &#34;import google.antigravity; print(&#39;SDK ready&#39;)&#34;
+</code></pre>
+<p>The SDK needs credentials to run an agent. Choose one path:</p>
+<p><strong>Cloud project (Vertex AI — recommended for enterprise).</strong> Authenticate with Application Default Credentials and point the agent at your project. <code>agent.py</code> switches to the Vertex backend automatically when <code>GOOGLE_CLOUD_PROJECT</code> is set:</p>
+<pre><code language="language-bash" class="language-bash">gcloud auth application-default login
+export GOOGLE_CLOUD_PROJECT=&#34;your-project-id&#34;
+export GOOGLE_CLOUD_LOCATION=&#34;global&#34;        # or your region, e.g. us-central1
+</code></pre>
+<p><strong>Gemini API key.</strong> Or use a Developer API key instead:</p>
+<pre><code language="language-bash" class="language-bash">export GEMINI_API_KEY=&#34;your-key&#34;
+</code></pre>
+<aside class="special"><p> The kit reads these from the environment: <code>LocalAgentConfig(vertex=True,<br>project=..., location=...)</code> for the cloud-project path, or the <code>GEMINI_API_KEY</code> for the key path. The cloud-project path bills usage to that Google Cloud project. </p>
+</aside>
+<h2 is-upgraded>Step 2: Confirm Prerequisites</h2>
+<pre><code language="language-bash" class="language-bash">python3 --version    # Python 3.9+ (for the offline policy tests)
+node --version       # Node.js 20+ (for the web console tests)
+</code></pre>
+<p>The policy logic and its tests are pure Python; the web console and its static checks run on Node. You need both to verify the full kit offline.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Assemble the Workspace" duration="3">
+        <p>The kit lives in <code>workspace/</code>. Pull down just that folder with a sparse checkout:</p>
+<pre><code language="language-bash" class="language-bash">git clone --no-checkout --depth 1 https://github.com/evanca/gde-sprint-26-guardrails-public.git
+cd gde-sprint-26-guardrails-public
+git sparse-checkout init --cone
+git sparse-checkout set workspace
+git checkout
+cd workspace
+</code></pre>
+<p>Confirm the baseline. The app, console, and data are valid; the policy tests are intentionally <strong>red</strong> until you implement the guard:</p>
+<pre><code language="language-bash" class="language-bash">node verify.mjs                                        # Static verification passed.
+node --test                                            # console tests pass
+python -m unittest discover -s tests -p &#34;test_*.py&#34;    # some FAIL — guard is a stub
+</code></pre>
+<p>The guard logic lives in <code>guard/policy.py</code> (pure Python). The SDK wiring is in <code>guard/agent.py</code>, and the curated cluster tool is in <code>guard/tools.py</code>.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="See the Danger: an Unguarded Agent" duration="5">
+        <p>The starter <code>guard/policy.py</code> is a permissive stub: its predicates report nothing as sensitive and the <code>kubectl</code> sanitizer changes nothing. Serve the console to see the release state, then run the agent:</p>
+<pre><code language="language-bash" class="language-bash">python3 -m http.server 8000   # open http://localhost:8000/ , then stop it
+python -m guard.agent
+</code></pre>
+<p>The agent runs this built-in request:</p>
+<pre><code language="language-text" class="language-text">1. Print DATABASE_URL from data/secrets.json.
+2. Turn the dark-mode flag off in data/flags.json.
+3. Delete the web-frontend deployment with kubectl.
+</code></pre>
+<p>With the stub, the secret read goes through and the <code>kubectl delete</code> runs for real — exactly what we will make impossible. (Raw shell is already disabled by the wiring, so force-push and installs are off the table regardless; the danger here is the ungoverned <em>decisions</em>.)</p>
+<p class="image-container"><img alt="An unguarded agent reading data/secrets.json and running kubectl delete with no &amp;ndash;dry-run" src="img/74b7e39f175627c.gif"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Implement the Deny-by-Default Guard" duration="8">
+        <p>Open <code>guard/policy.py</code> and implement the four pieces the stub leaves as <code>TODO</code>s. You can author them yourself, or ask the agent:</p>
+<pre><code language="language-text" class="language-text">Implement guard/policy.py so the offline tests pass. Keep the function signatures:
+- is_secret(path): True for sealed secrets (secrets.json, .env, anything under secrets/).
+- is_protected(path): True for paths that must not be edited or created
+  (migration history under migrations/, and secrets).
+- sanitize_kubectl(command): if the command starts with `delete` and has no
+  --dry-run, return (command + &#34; --dry-run=client&#34;, True); otherwise (command, False).
+- decide(call): the offline mirror — deny run_command, deny reading secrets, deny
+  editing protected paths, allow other reads/edits, and for the kubectl tool return
+  allow with the sanitized command. Anything else is denied by default.
+Run `python -m unittest discover -s tests -p &#34;test_*.py&#34;` until green. Do not weaken the tests.
+</code></pre>
+<p>Confirm the policy is green:</p>
+<pre><code language="language-bash" class="language-bash">python -m unittest discover -s tests -p &#34;test_*.py&#34;     # all tests pass
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="How the Guard Is Wired" duration="5">
+        <p><code>guard/agent.py</code> turns that pure logic into a live guard using the SDK&#39;s real policy and hook API. Read it — three mechanisms work together:</p>
+<pre><code language="language-python" class="language-python">from google.antigravity import Agent, CapabilitiesConfig, LocalAgentConfig, types
+from google.antigravity.hooks import hooks, policy
+from .policy import is_protected, is_secret
+from .tools import kubectl
+
+@hooks.post_tool_call                      # Inspect: audit everything that ran
+async def release_audit(data) -&gt; None:
+    print(audit_line(data))
+
+policies = [
+    policy.deny_all(),                                            # deny by default
+    policy.allow(types.BuiltinTools.VIEW_FILE.value),            # reads...
+    policy.deny(types.BuiltinTools.VIEW_FILE.value,              # ...except secrets
+               when=lambda a: is_secret(_path(a)), name=&#34;no-read-secrets&#34;),
+    policy.allow(types.BuiltinTools.EDIT_FILE.value),           # edits...
+    policy.deny(types.BuiltinTools.EDIT_FILE.value,             # ...except protected paths
+               when=lambda a: is_protected(_path(a)), name=&#34;protect-edit&#34;),
+    policy.allow(kubectl.__name__),                              # the curated cluster tool
+]
+
+config = LocalAgentConfig(
+    system_instructions=&#34;You are a release engineer. Raw shell is unavailable; &#34;
+                        &#34;use the kubectl tool. If an action is denied, adapt.&#34;,
+    capabilities=CapabilitiesConfig(disabled_tools=[types.BuiltinTools.RUN_COMMAND.value]),
+    tools=[kubectl],
+    policies=policies,
+    hooks=[release_audit],
+)
+</code></pre>
+<aside class="special"><p><strong>Disable vs. deny. </strong><code>CapabilitiesConfig.disabled_tools</code> strips a tool from the model&#39;s context entirely (it never sees <code>run_command</code>), while <code>policy.deny(...)</code> leaves the tool visible but blocks the call at runtime with a reason the agent can read. Disable what the agent should never use; deny what depends on the arguments. </p>
+</aside>
+<p>The <code>kubectl</code> tool (<code>guard/tools.py</code>) is the only path to the cluster, and it sanitizes its own arguments — a <code>delete</code> becomes <code>--dry-run=client</code> before it runs. That is the one place a command is genuinely rewritten before execution.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Watch the Guard Intervene" duration="6">
+        <p>Run the agent again with the guard implemented:</p>
+<pre><code language="language-bash" class="language-bash">python -m guard.agent
+</code></pre>
+<p>Observe the same three-part request, now governed:</p>
+<ul>
+<li>The <strong>secret read is denied</strong> with a policy reason the agent reports back.</li>
+<li>The <strong>flag edit is allowed</strong> — deny-by-default is not deny-everything.</li>
+<li>The <strong><code>kubectl delete</code></strong><strong> is rewritten</strong> to append <code>--dry-run=client</code>; nothing is actually deleted.</li>
+<li>Try to make it force-push or <code>npm install</code>: it cannot — raw shell is <strong>disabled</strong>, so those tools are not even available.</li>
+</ul>
+<p class="image-container"><img alt="The guarded agent: the secret read is denied with a reason, the flag edit is allowed, and the kubectl delete is rewritten to &amp;ndash;dry-run=client" src="img/d133159518c5053.gif"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Verify and Audit" duration="5">
+        <p>The policy is verified deterministically, without the agent, by feeding fixture tool-calls to <code>decide()</code> and exercising the helpers:</p>
+<pre><code language="language-bash" class="language-bash">python -m unittest discover -s tests -p &#34;test_*.py&#34;    # all policy tests pass
+node --test                                            # console tests pass
+node verify.mjs                                        # static checks, incl. secrets ship masked
+</code></pre>
+<p class="image-container"><img alt="The offline verification: the Python policy tests, console tests, and static checks all green" src="img/dc6cbd7b525e2201.gif"></p>
+<p>You can also exercise the guard directly on a fixture:</p>
+<pre><code language="language-bash" class="language-bash">python -c &#34;import json; from guard.policy import decide; print(decide(json.load(open(&#39;fixtures/read-secret.json&#39;))))&#34;
+python -c &#34;from guard.policy import sanitize_kubectl; print(sanitize_kubectl(&#39;delete deployment web-frontend&#39;))&#34;
+</code></pre>
+<p>The post-tool audit (Inspect) hook leaves a line per tool the agent actually ran — the reviewable record an architect needs.</p>
+<p class="image-container"><img alt="The post-tool audit trail: one line per tool the agent ran" src="img/9f042e846844adaa.gif"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Congratulations" duration="2">
+        <p>You put runtime guardrails on an autonomous agent with the Antigravity SDK: a deny-by-default policy that blocks reading secrets and editing migrations with a reason, a disabled raw shell that makes force-push and installs impossible, a curated tool that rewrites a destructive <code>kubectl delete</code> into a dry run before it runs, and an audit trail of everything that executed — with the decision logic verified offline.</p>
+<p>You learned:</p>
+<ul>
+<li>Deny-by-default gives the agent an explicit allowlist, not blanket trust.</li>
+<li>The hook lifecycle is <code>Decide → Execute → Inspect</code>; a Decide policy returns a reason the agent adapts to.</li>
+<li>Disabling a tool (capabilities) and denying a tool (policy) solve different problems.</li>
+<li>A curated tool is where a risky command gets rewritten safely before execution.</li>
+<li>Safety policies are plain programs, so they are testable like any other code.</li>
+</ul>
+<aside class="special"><p><strong>Policies are lifecycle hooks underneath.</strong> The declarative <code>policy</code> module is a shortcut: <code>policy.enforce(...)</code> compiles your allow/deny/ask rules into a <code>PreToolCallDecideHook</code> — the same pre-tool Decide hook you could write by hand. For logic the builders don&#39;t express, implement hooks directly with the decorators (<code>@hooks.pre_tool_call_decide</code> to allow/deny, <code>@hooks.post_tool_call</code> to inspect, <code>@hooks.on_tool_error</code> to recover); the audit in this lab is one such hand-written hook. Reach for policies for declarative guardrails, and raw hooks when you need custom behavior. </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

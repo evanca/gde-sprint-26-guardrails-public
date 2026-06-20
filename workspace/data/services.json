@@ -1,0 +1,6 @@
+[
+  { "id": "web", "name": "web-frontend", "environment": "prod", "status": "healthy", "version": "4.2.1" },
+  { "id": "api", "name": "api-gateway", "environment": "prod", "status": "healthy", "version": "4.2.1" },
+  { "id": "jobs", "name": "billing-jobs", "environment": "staging", "status": "degraded", "version": "4.3.0-rc1" },
+  { "id": "search", "name": "search-index", "environment": "dev", "status": "healthy", "version": "4.3.0-dev" }
+]

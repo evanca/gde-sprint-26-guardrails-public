@@ -1,0 +1,6 @@
+{
+  "name": "edit_file",
+  "args": {
+    "path": "migrations/0007_add_orders_index.sql"
+  }
+}

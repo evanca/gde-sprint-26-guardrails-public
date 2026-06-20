@@ -1,0 +1,6 @@
+{
+  "name": "edit_file",
+  "args": {
+    "path": "data/flags.json"
+  }
+}

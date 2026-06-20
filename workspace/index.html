@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Release Guardrails Console</title>
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+  <header>
+    <h1>Release Guardrails Console</h1>
+    <p id="status-summary" class="summary">Loading…</p>
+  </header>
+
+  <p id="error" class="error" role="alert" hidden></p>
+
+  <main>
+    <section aria-labelledby="services-h">
+      <h2 id="services-h">Services</h2>
+      <div id="service-grid"></div>
+    </section>
+
+    <section aria-labelledby="flags-h">
+      <h2 id="flags-h">Feature flags</h2>
+      <ul id="flag-list"></ul>
+    </section>
+
+    <section aria-labelledby="migrations-h">
+      <h2 id="migrations-h">Migrations</h2>
+      <ul id="migration-list"></ul>
+    </section>
+
+    <section aria-labelledby="config-h">
+      <h2 id="config-h">Production config</h2>
+      <div id="config-panel"></div>
+    </section>
+
+    <section aria-labelledby="secrets-h">
+      <h2 id="secrets-h">Secrets <small>(masked — sealed from the agent)</small></h2>
+      <ul id="secret-list"></ul>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

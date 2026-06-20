@@ -1,0 +1,6 @@
+{
+  "name": "kubectl",
+  "args": {
+    "command": "delete deployment web-frontend"
+  }
+}

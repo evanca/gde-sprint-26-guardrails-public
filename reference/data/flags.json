@@ -1,0 +1,5 @@
+[
+  { "id": "new-checkout", "label": "New checkout flow", "enabled": false },
+  { "id": "dark-mode", "label": "Dark mode", "enabled": true },
+  { "id": "beta-search", "label": "Beta search ranking", "enabled": false }
+]

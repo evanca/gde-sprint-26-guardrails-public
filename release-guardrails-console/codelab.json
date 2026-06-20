@@ -1,0 +1,31 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2026-06-20T20:56:15+03:00",
+  "id": "release-guardrails-console",
+  "duration": 42,
+  "title": "Guard an Autonomous Agent with Deny-by-Default Policies and Lifecycle Hooks",
+  "authors": "evanca",
+  "summary": "Put deny-by-default safety policies and lifecycle hooks on an autonomous agent working in a release repo — disable raw shell, deny reads of secrets and edits of migrations, route cluster commands through a tool that rewrites destructive deletes to a dry run, and audit everything.",
+  "source": "../codelab-05-release-guardrails/codelab.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "antigravity",
+    "sdk"
+  ],
+  "tags": [
+    "antigravity-sdk",
+    "deny-by-default",
+    "hooks",
+    "lifecycle",
+    "safety-policies",
+    "web"
+  ],
+  "feedback": "https://github.com/evanca/gde-sprint-26-guardrails-public/issues",
+  "url": "release-guardrails-console"
+}
